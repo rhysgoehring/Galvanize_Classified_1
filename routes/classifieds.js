@@ -28,7 +28,8 @@ router.post('/', (req, res, next) => {
     'title': req.body.title,
     'description': req.body.description,
     'price': req.body.price,
-    'item_image': req.body.item_image
+    'item_image': req.body.item_image,
+    'created at': new Date()
   }
   knex('classifieds').insert(newEntry).returning("*").then((response) => {
       res.send(response[0])
@@ -44,7 +45,8 @@ router.patch('/:id', (req, res, next) => {
     'title': req.body.title,
     'description': req.body.description,
     'price': req.body.price,
-    'item_image': req.body.item_image
+    'item_image': req.body.item_image,
+    'created_at': new Date()
   }
   knex('classifieds').update(updatedEntry).returning("*").then((response) => {
     res.send(response[0])
