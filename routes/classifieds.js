@@ -5,7 +5,7 @@ const knex = require('../knex')
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  knex('classifieds').orderBy('id', 'asc').then((classifieds) => {
+  knex('classifieds').select('id','title','description','price','item_image').then((classifieds) => {
       res.send(classifieds);
     })
     .catch((err) => {
@@ -14,13 +14,13 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  knex('classifieds').where('id', req.params.id).then((classified) => {
-      res.send(classified[0])
+  const id = req.params.id
+  console.log('id is    ', id)
+  knex('classifieds').where('id', id)
+    .select(['id', 'title', 'description', 'price', 'item_image']).then((classifieds) => {
+      res.send(classifieds[0])
     })
-    .catch((err) => {
-      next(err);
-    })
-});
+})
 
 router.post('/', (req, res, next) => {
   let newEntry = {
