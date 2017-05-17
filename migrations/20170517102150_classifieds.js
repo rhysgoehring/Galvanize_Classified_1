@@ -2,11 +2,11 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('classifieds', (table) => {
-    table.increments('id').primary().notNullable();
-    table.text('title', 255).notNullable();
-    table.text('description', 255).notNullable();
-    table.integer('price').notNullable();
-    table.text('item_image').notNullable();
+    table.increments('id').primary();
+    table.string('title', 255).notNullable();
+    table.string('description', 255).notNullable();
+    table.decimal('price').notNullable();
+    table.string('item_image', 255).notNullable();
     table.timestamps(true, true);
   });
 };
