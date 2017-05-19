@@ -4,13 +4,20 @@ const express = require('express');
 const app = express();
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const path = require('path')
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 
 const messages = require('./routes/classifieds');
 
-app.use('/classifieds', messages);
+// Server Adjustments for Angular
+app.use(express.static(path.join(__dirname, '/../client')))
+app.use(express.static(path.join(__dirname, '/../', 'node_modules')))
+app.use('/api/classifieds', messages)
+app.use('*', function(req, res, next) {
+  res.sendFile('index.html', {root: path.join(__dirname, '/../client')})
+})
 
 const port = process.env.PORT || 3000;
 
